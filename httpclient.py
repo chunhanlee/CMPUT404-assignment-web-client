@@ -24,6 +24,7 @@ import re
 # you may use urllib to encode data appropriately
 import urllib
 import socket
+from urlparse import urlparse
 
 def help():
     print "httpclient.py [GET/POST] [URL]\n"
@@ -50,13 +51,16 @@ class HTTPClient(object):
         return sockets
 
     def get_code(self, data):
-        return None
+        UrlCode = data.split()[1]
+        return UrlCode
 
     def get_headers(self,data):
-        return None
+        pack_header = data.split("\r\n\r\n")
+        return pack_header [0]
 
     def get_body(self, data):
-        return None
+        pack_body = data.split("\r\n\r\n")
+        return pack_body [1]
 
     # read everything from the socket
     def recvall(self, sock):
