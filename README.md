@@ -22,3 +22,5 @@ Used for parsing url for simple parsing of the url statement
 
 https://docs.python.org/2/library/socket.html
 Used this website to learn how to connect socket for python
+
+

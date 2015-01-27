@@ -66,8 +66,7 @@ class HTTPClient(object):
         return sockets
 
     def get_code(self, data):
-        UrlCode = data.split()[1]
-        return int(UrlCode)
+        return int(data.split()[1])
 
     def get_headers(self,data):
         return data.split("\r\n\r\n")[0]
