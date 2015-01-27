@@ -41,7 +41,7 @@ class HTTPClient(object):
     port = None
     
     def get_host_port(self,url):
-        #https://docs.python.org/2/library/urlparse.html
+        #Gets the port for the host from url, no port than use port 80
         spliturl = urlparse(url)
         
         self.host = spliturl.hostname
@@ -51,16 +51,18 @@ class HTTPClient(object):
             self.port = spliturl.port
         else:
             self.port = 80
+            
     def get_host_path(self, url):
+        #Gets the path for the host from url, no path then end path with forwardslash
         spliturl = urlparse(url)
+        
         if (spliturl.path == ""):
             self.path = "/"
         else:
             self.path = spliturl.path
+            
     def connect(self, host, port):
         # use sockets!
-        #https://docs.python.org/2/library/socket.html
-        
         sockets = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sockets.connect((host,port))
         return sockets
