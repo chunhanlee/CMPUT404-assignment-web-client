@@ -38,7 +38,7 @@ class HTTPClient(object):
     
     path = ""
     host = ""
-    port = 80
+    port = None
     
     def get_host_port(self,url):
         #https://docs.python.org/2/library/urlparse.html
@@ -49,7 +49,8 @@ class HTTPClient(object):
 
         if (spliturl.port != None):
             self.port = spliturl.port
-
+        else:
+            self.port = 80
     def get_host_path(self, url):
         spliturl = urlparse(url)
         if (spliturl.path == ""):
@@ -69,12 +70,10 @@ class HTTPClient(object):
         return int(UrlCode)
 
     def get_headers(self,data):
-        pack_header = data.split("\r\n\r\n")[0]
-        return pack_header
+        return data.split("\r\n\r\n")[0]
 
     def get_body(self, data):
-        pack_body = data.split("\r\n\r\n")[1]
-        return pack_body
+        return data.split("\r\n\r\n")[1]
 
     # read everything from the socket
     def recvall(self, sock):
