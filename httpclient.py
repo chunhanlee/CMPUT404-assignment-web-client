@@ -35,7 +35,7 @@ class HTTPRequest(object):
         self.body = body
 
 class HTTPClient(object):
-    #def get_host_port(self,url):
+    
     path = ""
     host = ""
     port = 80
@@ -45,19 +45,17 @@ class HTTPClient(object):
         spliturl = urlparse(url)
         
         self.host = spliturl.hostname
-        
-        if (spliturl.path == ""):
-            
-            self.path = "/"
-        
-        else:
-            
-            self.path = spliturl.path
+        self.get_host_path(url)
 
         if (spliturl.port != None):
-            
             self.port = spliturl.port
 
+    def get_host_path(self, url):
+        spliturl = urlparse(url)
+        if (spliturl.path == ""):
+            self.path = "/"
+        else:
+            self.path = spliturl.path
     def connect(self, host, port):
         # use sockets!
         #https://docs.python.org/2/library/socket.html
@@ -114,10 +112,10 @@ class HTTPClient(object):
         if (args == None):
             httpRequest = httpRequest + "Content-Length: 0\r\n\r\n"
         else:
-            encodeArg = urllib.urlencode(args)
-            lenarg = str(len(encodeArg))
+            Arg = urllib.urlencode(args)
+            lenarg = str(len(Arg))
             httpRequest = httpRequest + "Content-Length: %s\r\n\r\n" % lenarg +\
-                            encodeArg
+                            Arg
         
         conn.sendall(httpRequest)
         data = self.recvall(conn)
