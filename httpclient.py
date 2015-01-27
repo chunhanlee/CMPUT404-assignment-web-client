@@ -53,7 +53,6 @@ class HTTPClient(object):
         if (spliturl.port != None):
             self.port = spliturl.port
 
-
     def connect(self, host, port):
         # use sockets!
         #https://docs.python.org/2/library/socket.html
@@ -62,8 +61,8 @@ class HTTPClient(object):
         return sockets
 
     def get_code(self, data):
-        UrlCode = int(data.split()[1])
-        return UrlCode
+        UrlCode = data.split()[1]
+        return int(UrlCode)
 
     def get_headers(self,data):
         pack_header = data.split("\r\n\r\n")[0]
@@ -104,19 +103,19 @@ class HTTPClient(object):
         conn = self.connect(self.host, self.port)
         
         httpRequest = "POST %s HTTP/1.1\r\n" % self.path +\
-                      "Content-Type: application/x-www-form-urlencoded"
+                      "Content-Type: application/x-www-form-urlencoded\r\n"
         
         if (args == None):
-            httpRequest + "Content-Length: 0\r\n\r\n"
+            httpRequest = httpRequest + "Content-Length: 0\r\n\r\n"
         else:
             encodeArg = urllib.urlencode(args)
             lenarg = str(len(encodeArg))
-            httpRequest + "Content-Length: %s\r\n\r\n" % lengarg +\
-                          encodeArg
+            httpRequest = httpRequest + "Content-Length: %s\r\n\r\n" % lenarg +\
+                            encodeArg
         
         conn.sendall(httpRequest)
         data = self.recvall(conn)
-        return HTTPRequest(self.get_code(data),self.get_body(data) )
+        return HTTPRequest(self.get_code(data),self.get_body(data))
 
     def command(self, url, command="GET", args=None):
         if (command == "POST"):
